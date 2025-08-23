@@ -1,0 +1,188 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(ellipse at center, #1a237e 0%, #0d1135 50%, #000000 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animaciones para efectos visuales */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-10px) translateX(5px); }
+    66% { transform: translateY(5px) translateX(-3px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    25% { opacity: 0.8; }
+    75% { opacity: 0.6; }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 15px rgba(102, 126, 234, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(102, 126, 234, 0.6), 0 0 35px rgba(255, 255, 255, 0.2); }
+}
+
+/* Estrellas de fondo */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    opacity: 0.8;
+    z-index: 0;
+    animation: twinkle 4s ease-in-out infinite, float 8s ease-in-out infinite;
+}
+
+body::after {
+    background-size: 250px 120px;
+    opacity: 0.6;
+    animation: pulse 6s ease-in-out infinite;
+}
+
+/* Header - Navbar styling */
+header {
+    position: relative;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Main content area */
+main {
+    position: relative;
+    z-index: 1;
+    padding: 30px;
+    min-height: calc(100vh - 140px); /* Ajuste para header y footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Content panel styling */
+.content-panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 40px 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    max-width: 1200px;
+    width: 100%;
+    min-height: 500px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer styling */
+footer {
+    position: relative;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 30px;
+    text-align: center;
+}
+
+footer p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el contenido del bloque */
+.block-content {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.block-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.block-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 20px;
+    }
+    
+    header h1 {
+        font-size: 20px;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    .content-panel {
+        padding: 30px 20px;
+        min-height: 400px;
+    }
+    
+    .block-content h2 {
+        font-size: 28px;
+    }
+    
+    footer {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-panel {
+        padding: 20px 15px;
+        min-height: 350px;
+    }
+    
+    .block-content h2 {
+        font-size: 24px;
+    }
+    
+    .block-content {
+        font-size: 16px;
+    }
+}
