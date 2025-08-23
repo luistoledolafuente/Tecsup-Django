@@ -1,25 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2 class="mb-4">📋 Lista de Items</h2>
-
-  {% if items %}
-    <div class="row">
-      {% for item in items %}
-        <div class="col-md-4 mb-3">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ item.name }}</h5>
-              <p class="card-text text-muted">{{ item.description }}</p>
-              <small class="text-secondary">Creado: {{ item.created_at|date:"d/m/Y" }}</small>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="alert alert-info">
-      No hay items disponibles.
-    </div>
-  {% endif %}
+  <h1>Items</h1>
+  <ul>
+    {% for item in items %}
+      <li>{{ item.name }} - {{ item.created_at|date:"d/m/Y" }}</li>
+    {% empty %}
+      <li>No items available.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
