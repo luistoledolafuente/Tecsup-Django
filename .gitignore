@@ -11,7 +11,7 @@ __pycache__/
 # Base de datos local
 db.sqlite3
 
-# Archivos de migraciones (opcional, si no quieres subirlos)
+# Archivos de migraciones 
 # */migrations/*.py
 # */migrations/__pycache__/
 
