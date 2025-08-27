@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+    <a href="{% url 'crear_pedido' %}" style="display: inline-block; margin-bottom: 20px; padding: 10px 15px; background-color: #9c28a7ff; color: white; text-decoration: none; border-radius: 4px;">
+    + Nuevo Pedido
+</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.usuario.nombre }}</td>
+                    <td>{{ pedido.producto.nombre }}</td>
+                    <td>{{ pedido.cantidad }}</td>
+                    <td>{{ pedido.fecha }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No hay pedidos aún.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
