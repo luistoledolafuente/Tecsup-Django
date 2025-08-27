@@ -1,25 +1,66 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2 class="mb-4">📋 Lista de Items</h2>
+<style>
+    .page-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .items-list {
+        list-style: none;
+    }
+    
+    .item-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        padding: 1.5rem;
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+    }
+    
+    .item-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .item-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+    
+    .item-date {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    .no-items {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 2rem;
+    }
+</style>
 
-  {% if items %}
-    <div class="row">
-      {% for item in items %}
-        <div class="col-md-4 mb-3">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ item.name }}</h5>
-              <p class="card-text text-muted">{{ item.description }}</p>
-              <small class="text-secondary">Creado: {{ item.created_at|date:"d/m/Y" }}</small>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="alert alert-info">
-      No hay items disponibles.
-    </div>
-  {% endif %}
+<h1 class="page-title">Interactive Items List</h1>
+
+<ul class="items-list">
+    {% for item in items %}
+        <li class="item-card">
+            <div class="item-name">{{ item.name }}</div>
+            <div class="item-date">Created: {{ item.created_at|date:"d/m/Y H:i" }}</div>
+            {% if item.description %}
+                <div style="margin-top: 0.5rem; color: #555;">{{ item.description }}</div>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li class="no-items">No items available.</li>
+    {% endfor %}
+</ul>
 {% endblock %}
