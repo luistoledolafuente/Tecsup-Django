@@ -1,0 +1,13 @@
+.table td {
+    color: #fff !important;
+}
+
+.content-panel .table td {
+    color: #000 !important;
+}
+
+.priority-high td,
+.priority-medium td,
+.priority-low td {
+    color: #fff !important;
+}

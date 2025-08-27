@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'tasks/task_list.css' %}">
+{% endblock %}
 
 {% block content %}
     <div class="row">
