@@ -6,6 +6,23 @@ from .forms import ExamForm, QuestionForm, ChoiceFormSet
 from categories.models import Category
 from datetime import timedelta
 from stats.models import Attempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+
+@login_required
+
 def exam_submit(request, exam_id):
     exam = get_object_or_404(Exam, id=exam_id)
     if request.method == 'POST':

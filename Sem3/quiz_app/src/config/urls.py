@@ -22,4 +22,6 @@ urlpatterns = [
     path('categories/', include('categories.urls')),
     path('stats/', include('stats.urls')),
     path('', include('quiz.urls')),  # <-- Agrega esta línea para la raíz
+    path('accounts/', include('django.contrib.auth.urls')),  # login/logout
+
 ]

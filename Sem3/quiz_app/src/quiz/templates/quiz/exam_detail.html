@@ -48,7 +48,23 @@
         </div>
     {% endif %}
 </div>
-
+<form method="post" action="{% url 'exam_submit' exam.id %}">
+    {% csrf_token %}
+    {% for question in exam.questions.all %}
+        <div class="mb-3">
+            <strong>{{ question.text }}</strong>
+            {% for choice in question.choices.all %}
+                <div>
+                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" required>
+                    {{ choice.text }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <!-- Puedes agregar un campo oculto para el tiempo si lo manejas con JS -->
+    <input type="hidden" name="time_taken" value="60">
+    <button type="submit" class="btn btn-success">Enviar respuestas</button>
+</form>
 
 <div>
     <a href="{% url 'exam_list' %}" class="btn btn-secondary">Volver a la lista</a>

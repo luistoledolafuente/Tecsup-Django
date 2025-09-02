@@ -44,10 +44,10 @@
     var chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [{% for stat in exam_stats %}"{{ stat.exam.title }}",{% endfor %}],
+            labels: [{% for stat in exam_stats %}"{{ stat.exam.title }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
             datasets: [{
                 label: 'Puntaje Promedio',
-                data: [{% for stat in exam_stats %}{{ stat.avg_score }},{% endfor %}],
+                data: [{% for stat in exam_stats %}{{ stat.avg_score }}{% if not forloop.last %}, {% endif %}{% endfor %}],
                 backgroundColor: 'rgba(54, 162, 235, 0.5)'
             }]
         }
