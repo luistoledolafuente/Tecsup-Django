@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from quiz.models import Exam
+from quiz.models import Exam, Question
 
 class Attempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -10,6 +10,7 @@ class Attempt(models.Model):
     correct_answers = models.PositiveIntegerField()
     time_taken = models.DurationField()
     date = models.DateTimeField(auto_now_add=True)
+    failed_questions = models.ManyToManyField(Question, blank=True)  
 
     def percent_correct(self):
         if self.total_questions:
