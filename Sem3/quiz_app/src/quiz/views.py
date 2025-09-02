@@ -10,16 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
-def signup(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
-
 
 @login_required
 
@@ -52,6 +42,19 @@ def exam_submit(request, exam_id):
         return redirect('exam_detail', exam_id=exam.id)
     else:
         return redirect('exam_detail', exam_id=exam.id)
+    
+
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+
 def exam_list(request):
     category_id = request.GET.get('category')
     exams = Exam.objects.all()

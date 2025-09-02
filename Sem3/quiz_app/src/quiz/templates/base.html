@@ -26,7 +26,10 @@
     </nav>
     <nav>
         {% if user.is_authenticated %}
-        Bienvenido, {{ user.username }} | <a href="{% url 'logout' %}">Cerrar sesión</a>
+        Bienvenido, {{ user.username }} | <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-link btn btn-link" style="padding:0; color:inherit;">Cerrar sesión</button>
+        </form>
         {% else %}
         <a href="{% url 'login' %}">Iniciar sesión</a>
         {% endif %}
@@ -43,9 +46,7 @@
                     <li class="nav-item">
                         <span class="nav-link">Hola, {{ user.username }}</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
-                    </li>
+                    
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
