@@ -4,7 +4,37 @@ from django.db import transaction
 from .models import Exam, Question, Choice
 from .forms import ExamForm, QuestionForm, ChoiceFormSet
 from categories.models import Category
+from datetime import timedelta
+from stats.models import Attempt
+def exam_submit(request, exam_id):
+    exam = get_object_or_404(Exam, id=exam_id)
+    if request.method == 'POST':
+        # Ejemplo: obtén las respuestas del usuario desde el formulario
+        user_answers = request.POST.getlist('answers')  # Ajusta según tu formulario
+        total_questions = exam.questions.count()
+        correct_answers = 0
 
+        for question in exam.questions.all():
+            correct_choice = question.choices.filter(is_correct=True).first()
+            user_choice_id = request.POST.get(f'question_{question.id}')
+            if correct_choice and str(correct_choice.id) == user_choice_id:
+                correct_answers += 1
+
+        score = correct_answers  # Puedes ajustar la fórmula de puntaje
+        time_taken_seconds = int(request.POST.get('time_taken', 0))  # Debes enviar este dato desde el frontend
+
+        Attempt.objects.create(
+            user=request.user,
+            exam=exam,
+            score=score,
+            total_questions=total_questions,
+            correct_answers=correct_answers,
+            time_taken=timedelta(seconds=time_taken_seconds)
+        )
+        messages.success(request, "¡Intento registrado!")
+        return redirect('exam_detail', exam_id=exam.id)
+    else:
+        return redirect('exam_detail', exam_id=exam.id)
 def exam_list(request):
     category_id = request.GET.get('category')
     exams = Exam.objects.all()
