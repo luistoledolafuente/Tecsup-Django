@@ -3,11 +3,15 @@ from django.contrib import messages
 from django.db import transaction
 from .models import Exam, Question, Choice
 from .forms import ExamForm, QuestionForm, ChoiceFormSet
+from categories.models import Category
 
 def exam_list(request):
-    """View to display a list of all exams"""
-    exams = Exam.objects.all().order_by('-created_date')
-    return render(request, 'quiz/exam_list.html', {'exams': exams})
+    category_id = request.GET.get('category')
+    exams = Exam.objects.all()
+    categories = Category.objects.all()
+    if category_id:
+        exams = exams.filter(categories__id=category_id)
+    return render(request, 'quiz/exam_list.html', {'exams': exams, 'categories': categories})
 
 def exam_detail(request, exam_id):
     """View to display the details of an exam with its questions"""
@@ -16,16 +20,24 @@ def exam_detail(request, exam_id):
     return render(request, 'quiz/exam_detail.html', {'exam': exam, 'questions': questions})
 
 def exam_create(request):
-    """View to create a new exam"""
     if request.method == 'POST':
         form = ExamForm(request.POST)
         if form.is_valid():
-            exam = form.save()
-            messages.success(request, 'Examen creado correctamente.')
-            return redirect('question_create', exam_id=exam.id)
+            exam = form.save(commit=False)
+            exam.save()
+            form.save_m2m()
+            # Crear nueva categoría si se ingresó
+            new_name = form.cleaned_data.get('new_category_name')
+            if new_name:
+                new_cat = Category.objects.create(
+                    name=new_name,
+                    description=form.cleaned_data.get('new_category_description', ''),
+                    icon=form.cleaned_data.get('new_category_icon', '')
+                )
+                exam.categories.add(new_cat)
+            return redirect('exam_list')
     else:
         form = ExamForm()
-    
     return render(request, 'quiz/exam_form.html', {'form': form})
 
 def question_create(request, exam_id):

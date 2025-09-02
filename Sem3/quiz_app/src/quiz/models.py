@@ -1,10 +1,13 @@
 from django.db import models
+from categories.models import Category
 
 class Exam(models.Model):
     """Model for exams"""
     title = models.CharField(max_length=200, verbose_name="Título")
     description = models.TextField(blank=True, verbose_name="Descripción")
     created_date = models.DateTimeField(auto_now_add=True)
+    categories = models.ManyToManyField(Category, related_name='exams', blank=True)
+
     
     def __str__(self):
         return self.title
