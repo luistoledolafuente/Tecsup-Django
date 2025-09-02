@@ -1,31 +1,9 @@
-# ==== ENTORNOS VIRTUALES ====
-venv/
-src/venv/
-
-# ==== PYTHON ====
-__pycache__/
+echo "__pycache__/
 *.py[cod]
 *$py.class
-
-# ==== DJANGO ====
-# Base de datos local
+*.so
+.Python
 db.sqlite3
-
-# Archivos de migraciones 
-# */migrations/*.py
-# */migrations/__pycache__/
-
-# ==== CONFIGURACIÓN PRIVADA ====
 .env
-*.env
-
-# ==== LOGS ====
-*.log
-
-# ==== EDITORES ====
-.vscode/
-.idea/
-
-# ==== SISTEMA ====
-.DS_Store
-Thumbs.db
+venv/
+.vscode/" > .gitignore
