@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Estadísticas de Rendimiento{% endblock %}
+{% block content %}
+<h2>Estadísticas de Intentos</h2>
+<p>Puntaje promedio: {{ avg_score }}</p>
+<p>Tiempo promedio: {{ avg_time }}</p>
+
+<h3>Por Examen</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Examen</th>
+            <th>Intentos</th>
+            <th>Puntaje Promedio</th>
+            <th>Tiempo Promedio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stat in exam_stats %}
+        <tr>
+            <td>{{ stat.exam.title }}</td>
+            <td>{{ stat.attempts }}</td>
+            <td>{{ stat.avg_score }}</td>
+            <td>{{ stat.avg_time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Preguntas con más fallos</h3>
+<ul>
+    {% for question, count in top_failed_questions %}
+        <li>{{ question.text }} (Fallos: {{ count }})</li>
+    {% empty %}
+        <li>No hay datos de fallos aún.</li>
+    {% endfor %}
+</ul>
+
+<!-- Ejemplo de gráfico con Chart.js -->
+<canvas id="scoreChart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('scoreChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for stat in exam_stats %}"{{ stat.exam.title }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+                label: 'Puntaje Promedio',
+                data: [{% for stat in exam_stats %}{{ stat.avg_score }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            }]
+        }
+    });
+</script>
+{% endblock %}
